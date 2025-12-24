@@ -37,8 +37,8 @@ class TxtFormatter:
                 lines[line_id] = []
             lines[line_id].append(box['text'])
         
-        # Write lines in order - words separated by spaces for readability
+        # Write lines in order - words joined without spaces
         with open(txt_path, 'w', encoding='utf-8') as f:
             for line_id in sorted(lines.keys()):
-                line_text = " ".join(lines[line_id])  # Space between words
+                line_text = "".join(lines[line_id])  # NO space between words
                 f.write(line_text + "\n")
