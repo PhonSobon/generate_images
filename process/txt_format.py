@@ -3,6 +3,7 @@ import os
 class TxtFormatter:
     """
     Generates TXT files containing all words rendered in each image
+    Preserves the exact layout as it appears in the image with proper spacing
     """
     
     def __init__(self, output_dir="txt_labels"):
@@ -20,25 +21,8 @@ class TxtFormatter:
     
     def generate_txt_file(self, word_boxes, filename):
         """
-        Generate a TXT file containing all words from the image
-        Args:
-            word_boxes: List of dictionaries with word information
-            filename: Base filename (without extension)
-        """
-        txt_path = os.path.join(self.output_dir, f"{filename}.txt")
-        
-        # Extract all words in order
-        words = [box['text'] for box in word_boxes]
-        
-        # Join words with spaces and write to file
-        text_content = " ".join(words)
-        
-        with open(txt_path, 'w', encoding='utf-8') as f:
-            f.write(text_content)
-    
-    def generate_txt_file_multiline(self, word_boxes, filename):
-        """
-        Generate a TXT file with words organized by lines (alternative format)
+        Generate a TXT file with words organized by lines with spaces between words
+        Matches the exact readable layout of the document/image
         Args:
             word_boxes: List of dictionaries with word information
             filename: Base filename (without extension)
@@ -53,8 +37,8 @@ class TxtFormatter:
                 lines[line_id] = []
             lines[line_id].append(box['text'])
         
-        # Write lines in order
+        # Write lines in order - words separated by spaces for readability
         with open(txt_path, 'w', encoding='utf-8') as f:
             for line_id in sorted(lines.keys()):
-                line_text = " ".join(lines[line_id])
+                line_text = " ".join(lines[line_id])  # Space between words
                 f.write(line_text + "\n")
